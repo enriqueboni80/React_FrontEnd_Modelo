@@ -4,12 +4,11 @@ require('dotenv').config()
 class TesteIntegracaoService {
 
   static _withBaseUrl(path = "") {
-    alert(`${process.env.BACKEND_SERVER_ADDRESS}`)
-    return `https://localhost:44394/api/v1/${path}`;
+    return `http://localhost:3000/tools/${path}`;
   }
 
   static getValues() {
-    return axios(TesteIntegracaoService._withBaseUrl("weatherforecast"));
+    return axios(TesteIntegracaoService._withBaseUrl("teste-integracao"));
   }
 
 }
