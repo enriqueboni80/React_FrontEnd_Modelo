@@ -12,8 +12,11 @@ class UserService {
 
   static setObject = (formData) => {
     return {
+      "id": formData.userId,
+      "nome": formData.name,
       "email": formData.email,
-      "password": formData.password
+      "password": formData.password,
+      "activationtoken": formData.token
     }
   }
 
@@ -23,6 +26,17 @@ class UserService {
 
   static getValues() {
     return axios(UserService._withBaseUrl("login"));
+  }
+
+  static register(formData) {
+    var serviceObj = this.setObject(formData)
+    return axios.post(UserService._withBaseUrl("register"), serviceObj, this.CONFIG)
+  }
+
+  static activeToken(formData) {
+    var serviceObj = this.setObject(formData)
+    console.log(serviceObj)
+    return axios.post(UserService._withBaseUrl("register/active"), serviceObj, this.CONFIG)
   }
 
   static login(formData) {

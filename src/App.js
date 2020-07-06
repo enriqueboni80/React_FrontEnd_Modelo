@@ -7,6 +7,7 @@ import Dashboard from "./components/Dashboard"
 import TesteIntegracao from "./components/TesteIntregacao"
 import Eventos from "./components/Eventos"
 import Login from "./components/Login"
+import Register from "./components/Register"
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/login" component={Login} />
+          <Route exact path="/register" component={Register} />
           <>
             <NavBar />
             <div id="layoutSidenav">
