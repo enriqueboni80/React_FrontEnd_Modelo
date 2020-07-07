@@ -20,7 +20,7 @@ const Index = (props) => {
             console.log(response)
             if (response) {
                 localStorage.clear();
-                localStorage.setItem('jwttoken', response.data.token);
+                localStorage.setItem('jwttoken', response.data.jwtToken);
                 console.log(localStorage.getItem('jwttoken'))
                 alert('Logado com sucesso')
             } else {
