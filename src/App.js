@@ -8,6 +8,7 @@ import TesteIntegracao from "./components/TesteIntregacao"
 import Eventos from "./components/Eventos"
 import Login from "./components/Login"
 import Register from "./components/Register"
+import RecoveryPassword from "./components/RecoveryPassword"
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
         <Switch>
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
+          <Route exact path="/recovery-password" component={RecoveryPassword} />
           <>
             <NavBar />
             <div id="layoutSidenav">

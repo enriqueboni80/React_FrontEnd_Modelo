@@ -1,27 +1,69 @@
 /* import React, { useState, useEffect } from "react"; */
-import React from "react";
+import React, { useState } from "react";
 import UserService from "../../services/UserService"
+import ConfirmationForm from "./confirmationForm"
+import RecoveryForm from "./recoveryForm"
+import newPasswordForm from "./newPasswordForm"
 import { Link } from "react-router-dom"
+import NewPasswordForm from "./newPasswordForm";
 
 const Index = (props) => {
+
+    const [step, setStep] = useState(0)
+    const [userId, setUserId] = useState('')
+    const [token, setToken] = useState('')
 
     const handleSubmit = (e) => {
         e.preventDefault()
         var formData = {
             email: e.target.email.value,
-            password: e.target.password.value
         }
 
-        UserService.login(formData).then((response) => {
+        UserService.recoveryPassword(formData).then((response) => {
+            if (response) {
+                alert('Email de recuperação enviado com sucesso')
+                setUserId(response.data.userId)
+                setStep(1)
+            } else {
+                alert('erro ao enviar email de recuperação')
+            }
+        })
+    }
+
+    const handleSubmitToken = (e) => {
+        e.preventDefault()
+        var formData = {
+            userId: userId,
+            token: e.target.token.value
+        }
+
+        UserService.activeToken(formData).then((response) => {
             console.log(response)
             if (response) {
-                localStorage.clear();
-                localStorage.setItem('jwttoken', response.data.jwtToken);
-                console.log(localStorage.getItem('jwttoken'))
-                alert('Logado com sucesso')
-                window.location.href = "/eventos";
+                alert('usuario encontrado')
+                setUserId(formData.userId)
+                setToken(formData.token)
+                setStep(2)
             } else {
-                alert('não logado')
+                alert('usuario não encontrado')
+            }
+        })
+    }
+
+    const handleSubmitNewPassword = (e) => {
+        e.preventDefault()
+        var formData = {
+            userId: userId,
+            token: token,
+            password: e.target.newPassword.value
+        }
+
+        UserService.changePassword(formData).then((response) => {
+            if (response) {
+                alert('Senha trocada com sucesso')
+                window.location.href = "/login";
+            } else {
+                alert('senha não alterada')
             }
         })
     }
@@ -46,29 +88,15 @@ const Index = (props) => {
                                 <div class="row justify-content-center">
                                     <div class="col-lg-5">
                                         <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                            <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
+                                            <div class="card-header"><h3 class="text-center font-weight-light my-4">Password Recovery</h3></div>
                                             <div class="card-body">
-                                                <form onSubmit={(e) => handleSubmit(e)} method='POST'>
-                                                    <div class="form-group">
-                                                        <label class="small mb-1" for="inputEmailAddress">Email</label>
-                                                        <input class="form-control py-4" id="inputEmailAddress" type="email" name="email" placeholder="Enter email address" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="small mb-1" for="inputPassword">Password</label>
-                                                        <input class="form-control py-4" id="inputPassword" type="password" name="password" placeholder="Enter password" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input class="custom-control-input" id="rememberPasswordCheck" type="checkbox" />
-                                                            <label class="custom-control-label" for="rememberPasswordCheck">Remember password</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                        <a class="small" href="password.html">Forgot Password?</a>
-                                                        {/* <a class="btn btn-primary" href="index.html">Login</a> */}
-                                                        <button type="submit" variant="primary">Login</button>
-                                                    </div>
-                                                </form>
+                                                {step === 0 ?
+                                                    <RecoveryForm handleSubmit={(e) => handleSubmit(e)} />
+                                                    : step === 1 ?
+                                                    <ConfirmationForm handleSubmitToken={(e) => handleSubmitToken(e)} userId={userId} />
+                                                    :
+                                                    <NewPasswordForm handleSubmitNewPassword={(e) => handleSubmitNewPassword(e)} userId={userId} token={token} />
+                                                }
                                             </div>
                                             <div class="card-footer text-center">
                                                 <div class="small"><a href="register.html">Need an account? Sign up!</a></div>
@@ -86,8 +114,8 @@ const Index = (props) => {
                                     <div class="text-muted">Copyright &copy; Your Website 2020</div>
                                     <div>
                                         <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
+                                    &middot;
+                                    <a href="#">Terms &amp; Conditions</a>
                                     </div>
                                 </div>
                             </div>

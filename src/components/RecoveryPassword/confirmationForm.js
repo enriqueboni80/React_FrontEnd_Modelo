@@ -2,10 +2,10 @@
 import React, { useState } from "react";
 import { render } from "@testing-library/react";
 
-const ActivationForm = (props) => {
+const ConfirmationForm = (props) => {
     return (
         <form onSubmit={props.handleSubmitToken} method='POST'>
-            {/* <input type="hidden" name="userId" defaultValue={props.newUserId} id="userId"/> */}
+            {/* <input type="hidden" name="userId" defaultValue={props.userId} id="userId" /> */}
             <div>Confirme o token</div>
             <div class="form-row">
                 <div class="col-md-12">
@@ -21,4 +21,4 @@ const ActivationForm = (props) => {
         </form>)
 }
 
-export default ActivationForm
+export default ConfirmationForm

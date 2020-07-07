@@ -32,7 +32,7 @@ const Index = (props) => {
     const handleSubmitToken = (e) => {
         e.preventDefault()
         var formData = {
-            userId: e.target.userId.value,
+            userId: newUserId,
             token: e.target.token.value
         }
 
@@ -40,7 +40,7 @@ const Index = (props) => {
             console.log(response)
             if (response) {
                 alert('token validado com sucesso')
-                window.location.href = "/";
+                window.location.href = "/login";
             } else {
                 alert('Erro ao Cadastrar')
             }

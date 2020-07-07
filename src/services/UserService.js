@@ -44,6 +44,16 @@ class UserService {
     return axios.post(UserService._withBaseUrl("login"), serviceObj, this.CONFIG)
   }
 
+  static recoveryPassword(formData) {
+    var serviceObj = this.setObject(formData)
+    return axios.post(UserService._withBaseUrl("forgot-password"), serviceObj, this.CONFIG)
+  }
+
+  static changePassword(formData) {
+    var serviceObj = this.setObject(formData)
+    return axios.post(UserService._withBaseUrl("forgot-password/reset"), serviceObj, this.CONFIG)
+  }
+
 }
 
 export default UserService
