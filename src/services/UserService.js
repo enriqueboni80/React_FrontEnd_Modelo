@@ -3,7 +3,7 @@ require('dotenv').config()
 
 class UserService {
 
-  CONFIG = {
+  static CONFIG = {
     headers: { 
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': 'Bearer ' + localStorage.getItem('jwttoken')
