@@ -4,16 +4,16 @@ require('dotenv').config()
 class UserService {
 
   static CONFIG = {
-    headers: { 
+    headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer ' + localStorage.getItem('jwttoken')
-     }
+      /* 'Authorization': 'Bearer ' + localStorage.getItem('jwttoken') */
+    }
   };
 
   static setObject = (formData) => {
     return {
       "id": formData.userId,
-      "nome": formData.name,
+      "username": formData.name,
       "email": formData.email,
       "password": formData.password,
       "activationtoken": formData.token
@@ -30,28 +30,28 @@ class UserService {
 
   static register(formData) {
     var serviceObj = this.setObject(formData)
-    return axios.post(UserService._withBaseUrl("register"), serviceObj, this.CONFIG)
+    return axios.post(UserService._withBaseUrl("register"), serviceObj)
   }
 
   static activeToken(formData) {
     var serviceObj = this.setObject(formData)
     console.log(serviceObj)
-    return axios.post(UserService._withBaseUrl("register/active"), serviceObj, this.CONFIG)
+    return axios.post(UserService._withBaseUrl("register/validate"), serviceObj)
   }
 
   static login(formData) {
     var serviceObj = this.setObject(formData)
-    return axios.post(UserService._withBaseUrl("login"), serviceObj, this.CONFIG)
+    return axios.post(UserService._withBaseUrl("login"), serviceObj)
   }
 
   static recoveryPassword(formData) {
     var serviceObj = this.setObject(formData)
-    return axios.post(UserService._withBaseUrl("forgot-password"), serviceObj, this.CONFIG)
+    return axios.post(UserService._withBaseUrl("forgot-password"), serviceObj)
   }
 
   static changePassword(formData) {
     var serviceObj = this.setObject(formData)
-    return axios.post(UserService._withBaseUrl("forgot-password/reset"), serviceObj, this.CONFIG)
+    return axios.post(UserService._withBaseUrl("forgot-password/reset"), serviceObj)
   }
 
 }

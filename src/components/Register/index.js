@@ -19,6 +19,7 @@ const Index = (props) => {
         }
 
         UserService.register(formData).then((response) => {
+            console.log(response)
             if (response) {
                 alert('Cadastrado com sucesso')
                 setNewUserId(response.data.userId)
